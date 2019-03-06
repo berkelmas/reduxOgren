@@ -3,7 +3,7 @@ import {Text, View, TextInput} from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 
-import {emailChanged, passwordChanged} from "../actions";
+import {emailChanged, passwordChanged, loginAuth } from "../actions";
 import Button from './button';
 import Spinner from './spinner';
 
@@ -39,13 +39,15 @@ class Login extends Component {
         this.setState({loading : false});
     };
 
-    fonksiyon () {
-        console.log(this.props.email)
+    loginYap () {
+        const {email, password} = this.props;
+        this.props.loginAuth({email, password});
     };
 
     renderButton () {
-        if (!this.state.loading) {
-            return <Button onPress={/*this.firebaseGonder.bind(this)*/this.fonksiyon.bind(this)}>Giriş</Button>
+        if (!this.props.loading) {
+
+            return <Button onPress={/*this.firebaseGonder.bind(this)*/this.loginYap.bind(this)}>Giriş</Button>
         }
         return <Spinner/>
     };
@@ -54,6 +56,7 @@ class Login extends Component {
     render() {
 
         const {containerStyle, subcontainerStyle, inputStyle} = styles;
+
         return (
           <View style={containerStyle}>
               <View style={subcontainerStyle}>
@@ -70,7 +73,7 @@ class Login extends Component {
                       secureTextEntry={true}
                       placeholder={"Password"}
                       style={inputStyle}
-                      value={this.state.password}
+                      value={this.props.password}
                       onChangeText={password => this.props.passwordChanged(password)}
                   />
               </View>
@@ -122,11 +125,12 @@ const styles = {
 };
 
 const mapToStateProps = ({authResponse}) => {
-    const {email, password} = authResponse;
+    const {email, password, loading} = authResponse;
     return ({
         email,
-        password
+        password,
+        loading
     })
 };
 
-export default connect(mapToStateProps, { emailChanged, passwordChanged })(Login);
+export default connect(mapToStateProps, { emailChanged, passwordChanged, loginAuth })(Login);
