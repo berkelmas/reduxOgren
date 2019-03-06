@@ -7,6 +7,8 @@ import {emailChanged, passwordChanged, loginAuth } from "../actions";
 import Button from './button';
 import Spinner from './spinner';
 
+import Logout from './logout';
+
 class Login extends Component {
 
     state = {mail : '', password : '', loading : false};
@@ -46,43 +48,61 @@ class Login extends Component {
 
     renderButton () {
         if (!this.props.loading) {
-
             return <Button onPress={/*this.firebaseGonder.bind(this)*/this.loginYap.bind(this)}>Giriş</Button>
         }
         return <Spinner/>
     };
 
+    renderPage () {
+        const {containerStyle, subcontainerStyle, inputStyle} = styles;
+        if (this.props.loggedIn === false) {
+            return (
+                <View style={containerStyle}>
+                    <View style={subcontainerStyle}>
+                        <TextInput
+                            placeholder={"E-Mail"}
+                            style={inputStyle}
+                            value={this.props.email}
+                            onChangeText={email => this.props.emailChanged(email)}
+                        />
+                    </View>
+
+                    <View style={subcontainerStyle}>
+                        <TextInput
+                            secureTextEntry={true}
+                            placeholder={"Password"}
+                            style={inputStyle}
+                            value={this.props.password}
+                            onChangeText={password => this.props.passwordChanged(password)}
+                        />
+                    </View>
+
+                    <View style={subcontainerStyle}>
+                        {this.renderButton()}
+                    </View>
+
+                </View>
+            )
+        } else if (this.props.loggedIn) {
+            return (
+
+
+                        <Logout/>
+
+
+            )
+        }
+    }
+
 
     render() {
 
-        const {containerStyle, subcontainerStyle, inputStyle} = styles;
+
 
         return (
-          <View style={containerStyle}>
-              <View style={subcontainerStyle}>
-                  <TextInput
-                  placeholder={"E-Mail"}
-                  style={inputStyle}
-                  value={this.props.email}
-                  onChangeText={email => this.props.emailChanged(email)}
-                  />
-              </View>
-
-              <View style={subcontainerStyle}>
-                  <TextInput
-                      secureTextEntry={true}
-                      placeholder={"Password"}
-                      style={inputStyle}
-                      value={this.props.password}
-                      onChangeText={password => this.props.passwordChanged(password)}
-                  />
-              </View>
-
-              <View style={subcontainerStyle}>
-                    {this.renderButton()}
-              </View>
-
-          </View>
+            <View>
+            {this.renderPage()}
+            </View>
         );
     };
 
@@ -125,11 +145,12 @@ const styles = {
 };
 
 const mapToStateProps = ({authResponse}) => {
-    const {email, password, loading} = authResponse;
+    const {email, password, loading, loggedIn} = authResponse;
     return ({
         email,
         password,
-        loading
+        loading,
+        loggedIn
     })
 };
 

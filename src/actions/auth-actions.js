@@ -1,6 +1,13 @@
 import firebase from "firebase";
 
-import {EMAIL_CHANGED, PASSWORD_CHANGED, LOGIN_FAIL, LOGIN_SUCCESS, LOGIN_AUTH} from "./types";
+import {EMAIL_CHANGED,
+        PASSWORD_CHANGED,
+        LOGIN_FAIL,
+        LOGIN_SUCCESS,
+        LOGIN_AUTH,
+        LOGOUT_SUCCESS,
+        LOGOUT_AUTH
+    } from "./types";
 
 
 export const emailChanged = (email) => {
@@ -32,7 +39,7 @@ export const loginAuth = ({email, password}) => {
             .catch(() => {
                 firebase.auth().createUserWithEmailAndPassword(email, password)
                     .then(user => loginSuccess(dispatch, user))
-                    .catch(loginFail());
+                    .catch(loginFail(dispatch));
             })
 
     }
@@ -44,12 +51,33 @@ const loginSuccess = (dispatch, user) => {
             payload : user
         });
         console.log('başarılı');
+        console.log(user.email);
+        console.log(user.uid);
 };
 
 const loginFail = (dispatch) => {
-    return(dispatch) => {
         dispatch({
             type : LOGIN_FAIL
-        })
+        });
+        console.log('giriş başarısız...');
+};
+
+
+export const logoutAuth = (dispatch) => {
+    return (dispatch) => {
+        dispatch({
+            type: LOGOUT_AUTH
+        });
+            firebase.auth().signOut()
+                .then(logoutSuccess(dispatch))
     }
 };
+
+export const logoutSuccess = (dispatch) => {
+    dispatch({
+        type : LOGOUT_SUCCESS
+    });
+    console.log('çıkış başarılı...');
+};
+
+
