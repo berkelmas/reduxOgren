@@ -10,3 +10,7 @@ export const LOGOUT_SUCCESS = 'logout_success';
 
 
 export const LOAD_CHANGE = 'load_change';
+
+// Burada studentCreate için type'larımızı yazıyoruz.
+export const STUDENT_CREATE = 'student_create';
+export const STUDENT_CREATE_BUTTON = 'student_create_button';

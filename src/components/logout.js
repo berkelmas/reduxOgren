@@ -17,9 +17,19 @@ class Logout extends Component {
                     <View style={styles.subcontainerStyle}>
                         <Text>Hoşgeldiniz, {this.props.user.email}</Text>
                     </View>
+
+                    <View style={styles.subcontainerStyle}>
+                        <Text>Öğrenci 1</Text>
+                        <Text>Öğrenci 1</Text>
+                        <Text>Öğrenci 1</Text>
+                        <Text>Öğrenci 1</Text>
+                        <Text>Öğrenci 2</Text>
+                    </View>
+
                     <View style={styles.subcontainerStyle}>
                 <Button onPress={this.props.logoutAuth} >Çıkış Yap</Button>
                     </View>
+
         </View>
             )
         } else if (loading === true) {
