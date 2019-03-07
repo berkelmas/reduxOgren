@@ -7,3 +7,6 @@ export const LOGIN_FAIL = 'login_fail';
 
 export const LOGOUT_AUTH = 'logout_auth';
 export const LOGOUT_SUCCESS = 'logout_success';
+
+
+export const LOAD_CHANGE = 'load_change';

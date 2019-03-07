@@ -6,7 +6,8 @@ import {EMAIL_CHANGED,
         LOGIN_SUCCESS,
         LOGIN_AUTH,
         LOGOUT_SUCCESS,
-        LOGOUT_AUTH
+        LOGOUT_AUTH,
+        LOAD_CHANGE
     } from "./types";
 
 
@@ -74,6 +75,15 @@ export const logoutSuccess = (dispatch) => {
         type : LOGOUT_SUCCESS
     });
     console.log('çıkış başarılı...');
+};
+
+export const loadChange = ({loading}) => {
+    return (dispatch) => {
+        dispatch({
+            type : LOAD_CHANGE,
+            payload : loading
+        });
+    }
 };
 
 

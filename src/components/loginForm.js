@@ -3,7 +3,7 @@ import {Text, View, TextInput} from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 
-import {emailChanged, passwordChanged, loginAuth } from "../actions";
+import {emailChanged, passwordChanged, loginAuth, loadChange } from "../actions";
 import Button from './button';
 import Spinner from './spinner';
 
@@ -11,30 +11,9 @@ import Logout from './logout';
 
 class Login extends Component {
 
-    state = {mail : '', password : '', loading : false};
 
     componentWillMount() {
         console.log('compWillMount');
-    };
-
-    firebaseGonder() {
-        const {mail, password} = this.state;
-
-        this.setState({loading : true});
-
-        firebase.auth().signInWithEmailAndPassword(mail, password )
-            .then(this.loginSuccess.bind(this))
-            .catch(this.loginFail.bind(this))
-    }
-
-    loginSuccess () {
-        console.log('loginSuccess');
-        this.setState({loading : false});
-    };
-
-    loginFail () {
-        console.log('loginFailed');
-        this.setState({loading : false});
     };
 
     loginYap () {
@@ -47,6 +26,11 @@ class Login extends Component {
             return <Button onPress={/*this.firebaseGonder.bind(this)*/this.loginYap.bind(this)}>Giriş</Button>
         }
         return <Spinner/>
+    };
+
+    loadChange () {
+      const {loading} = this.props;
+      this.props.loadChange({loading});
     };
 
     renderPage () {
@@ -77,6 +61,10 @@ class Login extends Component {
                         {this.renderButton()}
                     </View>
 
+                    <View style={subcontainerStyle}>
+                        <Button onPress={this.loadChange.bind(this)}>Load Değiştir</Button>
+                    </View>
+
                 </View>
             )
         } else if (this.props.loggedIn) {
@@ -88,9 +76,6 @@ class Login extends Component {
 
 
     render() {
-
-
-
         return (
             <View>
             {this.renderPage()}
@@ -146,4 +131,4 @@ const mapToStateProps = ({authResponse}) => {
     })
 };
 
-export default connect(mapToStateProps, { emailChanged, passwordChanged, loginAuth })(Login);
+export default connect(mapToStateProps, { emailChanged, passwordChanged, loginAuth, loadChange })(Login);
