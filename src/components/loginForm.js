@@ -24,11 +24,7 @@ class Login extends Component {
 
         firebase.auth().signInWithEmailAndPassword(mail, password )
             .then(this.loginSuccess.bind(this))
-            .catch(() => {
-                firebase.auth().createUserWithEmailAndPassword(mail, password)
-                    .then(this.loginSuccess.bind(this))
-                    .catch(this.loginFail.bind(this));
-            })
+            .catch(this.loginFail.bind(this))
     }
 
     loginSuccess () {
@@ -85,11 +81,7 @@ class Login extends Component {
             )
         } else if (this.props.loggedIn) {
             return (
-
-
-                        <Logout/>
-
-
+                <Logout/>
             )
         }
     }
