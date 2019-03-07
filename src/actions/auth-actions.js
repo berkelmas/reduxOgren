@@ -1,4 +1,5 @@
 import firebase from "firebase";
+import {Actions} from 'react-native-router-flux';
 
 import {EMAIL_CHANGED,
         PASSWORD_CHANGED,
@@ -47,9 +48,7 @@ const loginSuccess = (dispatch, user) => {
             type : LOGIN_SUCCESS,
             payload : user
         });
-        console.log('başarılı');
-        console.log(user.email);
-        console.log(user.uid);
+        Actions.main();
 };
 
 const loginFail = (dispatch) => {
@@ -74,6 +73,7 @@ export const logoutSuccess = (dispatch) => {
     dispatch({
         type : LOGOUT_SUCCESS
     });
+    Actions.kimlik();
     console.log('çıkış başarılı...');
 };
 

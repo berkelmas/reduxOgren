@@ -35,7 +35,6 @@ class Login extends Component {
 
     renderPage () {
         const {containerStyle, subcontainerStyle, inputStyle} = styles;
-        if (this.props.loggedIn === false) {
             return (
                 <View style={containerStyle}>
                     <View style={subcontainerStyle}>
@@ -67,11 +66,7 @@ class Login extends Component {
 
                 </View>
             )
-        } else if (this.props.loggedIn) {
-            return (
-                <Logout/>
-            )
-        }
+
     }
 
 
